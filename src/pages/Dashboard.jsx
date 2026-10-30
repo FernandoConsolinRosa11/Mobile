@@ -4,6 +4,7 @@ import { useApp } from "../context/AppContext";
 import Gauge from "../components/dashboard/Gauge";
 import MachineSelector from "../components/dashboard/MachineSelector";
 import TileGrid from "../components/dashboard/TileGrid";
+import { getMachineDiagnostics } from "../utils/machineDiagnostics";
 
 export default function Dashboard() {
   const { machines, loading } = useMachines();
@@ -18,6 +19,7 @@ export default function Dashboard() {
 
   const machine = machines.find((m) => String(m.id) === String(selectedMachineId)) || machines[0];
   if (!machine) return <p>Nenhuma máquina cadastrada.</p>;
+  const diagnostics = getMachineDiagnostics(machine);
 
   return (
     <section>
@@ -26,16 +28,24 @@ export default function Dashboard() {
 
       <MachineSelector machines={machines} selected={machine} onSelect={setSelectedMachineId} />
 
-      <div className="card-box">
-        <div className="kicker">SENSORES ATIVOS</div>
-        <div className="gauge-row">
-          <Gauge value={`${machine.temp}°`} label="Temperatura" pct={machine.temp / machine.tempMax} />
-          <Gauge value={machine.vib} label="Vibração" pct={machine.vib / machine.vibMax} />
-          <Gauge value={machine.rpm} label="RPM Motor" pct={machine.rpm / 100} />
+      <div className={`machine-condition condition-${diagnostics.status}`} role="status">
+        <span className="condition-indicator" />
+        <div>
+          <strong>{diagnostics.status === "critico" ? "Condição crítica" : diagnostics.status === "alerta" ? "Atenção necessária" : "Boas condições"}</strong>
+          <p>{diagnostics.message}</p>
         </div>
       </div>
 
-      <TileGrid machine={machine} />
+      <div className="card-box">
+        <div className="kicker">SENSORES ATIVOS</div>
+        <div className="gauge-row">
+          <Gauge value={`${machine.temp}°`} label="Temperatura" pct={machine.temp / machine.tempMax} status={diagnostics.sensors.temp.status} message={diagnostics.sensors.temp.message} />
+          <Gauge value={machine.vib} label="Vibração" pct={machine.vib / machine.vibMax} status={diagnostics.sensors.vib.status} message={diagnostics.sensors.vib.message} />
+          <Gauge value={machine.rpm} label="RPM Motor" pct={machine.rpm / 100} status={diagnostics.sensors.rpm.status} message={diagnostics.sensors.rpm.message} />
+        </div>
+      </div>
+
+      <TileGrid machine={machine} sensors={diagnostics.sensors} />
 
       <div className="card-box">
         <div className="chart-wrap">

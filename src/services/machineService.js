@@ -1,4 +1,4 @@
-import { api } from "./api";
+import  api  from "./api";
 import { MOCK_MACHINES } from "./mockData";
 
 // "Model" — única camada que sabe conversar com o backend sobre Máquinas.

@@ -1,22 +1,21 @@
 import Icon from "../icons/Icon";
 
-const BELT_COLOR = { NORMAL: "var(--primary)", ATENCAO: "var(--warning)", CRITICO: "var(--danger)" };
+export default function TileGrid({ machine, sensors }) {
+  const tiles = [
+    { key: "oil", label: "Pressão Óleo", icon: "oil", value: `${machine.oil} bar` },
+    { key: "belt", label: "Correia", icon: "pulse", value: machine.belt },
+    { key: "filtro", label: "Filtro Ar", icon: "filter", value: `${machine.filtro}%` },
+  ];
 
-export default function TileGrid({ machine }) {
   return (
     <div className="tile-grid">
-      <div className="tile">
-        <div className="top"><Icon name="oil" size={14} />Pressão Óleo</div>
-        <div className="v">{machine.oil} bar</div>
-      </div>
-      <div className="tile">
-        <div className="top"><Icon name="pulse" size={14} />Correia</div>
-        <div className="v" style={{ color: BELT_COLOR[machine.belt] || "var(--text)" }}>{machine.belt}</div>
-      </div>
-      <div className="tile">
-        <div className="top"><Icon name="filter" size={14} />Filtro Ar</div>
-        <div className="v">{machine.filtro}%</div>
-      </div>
+      {tiles.map(({ key, label, icon, value }) => (
+        <div className={`tile condition-${sensors[key].status}`} key={key}>
+          <div className="top"><Icon name={icon} size={14} />{label}</div>
+          <div className="v">{value}</div>
+          <div className="condition-message">{sensors[key].message}</div>
+        </div>
+      ))}
       <div className="tile">
         <div className="top"><Icon name="clock" size={14} />Horímetro</div>
         <div className="v">{machine.horimetro}</div>

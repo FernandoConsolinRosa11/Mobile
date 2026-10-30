@@ -28,9 +28,9 @@ export default function Header({ onOpenMenu, showMenuButton = true }) {
         <span className="tag">AGRO</span>
       </div>
       <span className="clock-badge">{clock}</span>
-      <button className="icon-btn" onClick={() => showToast("2 alertas não lidos")} aria-label="Notificações">
+      <button className="icon-btn" onClick={() => showToast("4 alertas não lidos")} aria-label="Notificações">
         <Icon name="bell" />
-        <span className="bell-badge">2</span>
+        <span className="bell-badge">4</span>
       </button>
     </div>
   );

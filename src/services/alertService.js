@@ -1,4 +1,4 @@
-import { api } from "./api";
+import  api  from "./api";
 import { MOCK_ALERTS } from "./mockData";
 
 export const alertService = {

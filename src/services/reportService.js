@@ -1,4 +1,4 @@
-import { api } from "./api";
+import  api  from "./api";
 import { MOCK_REPORT } from "./mockData";
 
 export const reportService = {

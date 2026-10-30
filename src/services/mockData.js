@@ -8,7 +8,7 @@ export const MOCK_MACHINES = [
   { id: 3, name: "Plantadeira ExactEmerge", model: "John Deere DB60", status: "operando", updatedAt: new Date(),
     temp: 75, tempMax: 120, vib: 1.8, vibMax: 5, rpm: 58, oil: 3.4, belt: "NORMAL", filtro: 90, horimetro: "1.560 h" },
   { id: 4, name: "Pulverizador R4045", model: "John Deere R4045", status: "critico", updatedAt: new Date(),
-    temp: 95, tempMax: 120, vib: 4.6, vibMax: 5, rpm: 80, oil: 2.1, belt: "CRITICO", filtro: 55, horimetro: "3.298 h" },
+    temp: 135, tempMax: 120, vib: 4.6, vibMax: 5, rpm: 80, oil: 2.1, belt: "CRITICO", filtro: 55, horimetro: "3.298 h" },
 ];
 
 export const MOCK_ALERTS = [
